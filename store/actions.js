@@ -1,30 +1,145 @@
-import { POST_ADD_ORDER, POST_ADD_ORDER_SUCCESS, POST_ADD_ORDER_ERROR, POST_ADD_TO_ORDER_CHECK } from './actionTypes';
+import { 
+  REQUEST_TICKETS_LOADING, 
+  REQUEST_TICKETS_ERROR, 
+  REQUEST_TICKETS_SUCCESS, 
+  ADD_PRODUCT_TO_SHOP_KART,
+  CLEAR_SHOP_KART,
+  REQUEST_PROMOS_LOADING, 
+  REQUEST_PROMOS_ERROR, 
+  REQUEST_PROMOS_SUCCESS, 
+  REQUEST_MENUS_LOADING,
+  REQUEST_MENUS_ERROR,
+  REQUEST_MENUS_SUCCESS,
+  REQUEST_USER_LOADING,
+  REQUEST_USER_ERROR,
+  REQUEST_USER_SUCCESS,
+  REQUEST_PRODUCTS_LOADING,
+  REQUEST_PRODUCTS_ERROR,
+  REQUEST_PRODUCTS_SUCCESS,
+} from './actionTypes'
 
-export const postAddOrder = (order, checked) => ({
-    type: POST_ADD_ORDER,
-    payload: { order, checked }
-})
-export const postAddOrderSuccess = response => ({
-    type: POST_ADD_ORDER_SUCCESS,
-    payload: { response }
-})
-export const postAddOrderError = error => ({
-    type: POST_ADD_ORDER_ERROR,
-    payload: { error }
-})
-export const postAddOrderToCheck = order => ({
-    type: POST_ADD_TO_ORDER_CHECK,
-    payload: { order }
-})
-export const postAddToKart = product => ({
-    type: POST_ADD_TO_KART,
-    payload: { products }
-})
-export const postAddToKartSuccess = response => ({
-    type: POST_ADD_TO_KART_SUCCESS,
-    payload: { response }
-})
-export const postAddToKartError = error => ({
-    type: POST_ADD_TO_KART_ERROR,
-    payload: { error }
-})
+/* Ticket */
+export const requestTicketsLoading = payload => {
+    return {
+      type: REQUEST_TICKETS_LOADING,
+      payload: null
+    }
+  };
+  
+export const requestTicketsError = payload => {
+    return {
+      type: REQUEST_TICKETS_ERROR,
+      payload
+    }
+  };
+  
+export const requestTicketsSuccess = payload => {
+    return {
+      type: REQUEST_TICKETS_SUCCESS,
+      payload
+    }
+  };
+
+  /* Promo */
+export const requestPromosLoading = payload => {
+    return {
+      type: REQUEST_PROMOS_LOADING,
+      payload: null
+    }
+  };
+  
+export const requestPromosError = payload => {
+    return {
+      type: REQUEST_PROMOS_ERROR,
+      payload
+    }
+  };
+  
+export const requestPromosSuccess = payload => {
+    return {
+      type: REQUEST_PROMOS_SUCCESS,
+      payload
+    }
+  };
+
+  /* Menu */
+export const requestMenusLoading = payload => {
+    return {
+      type: REQUEST_MENUS_LOADING,
+      payload: null
+    }
+  };
+  
+export const requestMenusError = payload => {
+    return {
+      type: REQUEST_MENUS_ERROR,
+      payload
+    }
+  };
+  
+export const requestMenusSuccess = payload => {
+    return {
+      type: REQUEST_MENUS_SUCCESS,
+      payload
+    }
+  };
+
+    /* User */
+export const requestUserLoading = payload => {
+  return {
+    type: REQUEST_USER_LOADING,
+    payload: null
+  }
+};
+
+export const requestUserError = payload => {
+  return {
+    type: REQUEST_USER_ERROR,
+    payload
+  }
+};
+
+export const requestUserSuccess = payload => {
+  return {
+    type: REQUEST_USER_SUCCESS,
+    payload
+  }
+};
+
+  /* Product */
+export const requestProductsLoading = payload => {
+    return {
+      type: REQUEST_PRODUCTS_LOADING,
+      payload: null
+    }
+  };
+  
+
+export const requestProductsError = payload => {
+    return {
+      type: REQUEST_PRODUCTS_ERROR,
+      payload
+    }
+  };
+  
+export const requestProductsSuccess = payload => {
+    return {
+      type: REQUEST_PRODUCTS_SUCCESS,
+      payload
+    }
+  };
+
+    /* Shop Kart */
+export const addProductToKart = payload => {
+  return {
+    type: ADD_PRODUCT_TO_SHOP_KART,
+    payload
+  }
+}
+
+export const clearKart = payload => {
+  return {
+    type: CLEAR_SHOP_KART,
+    payload
+  }
+}

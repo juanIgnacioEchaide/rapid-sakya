@@ -1,6 +1,9 @@
-export const getFullHistory = state => ((state.history.orders || [] ));
-export const getInvoices = state => state.history.invoices;
-export const getUser = state => state.user_settings.username;
-export const getShopKart = state => state.shop_kart;
-export const getOrderStatus = state => state.order_status;
+export const getTickets = state => state.tickets.tickets;
+export const getPromos = state => state.promos.promos;
+export const getProducts = state => state.products.products;
+export const getMenus = state => state.menus.menus;
+export const getShopkart = state => state.shopkart;
+export const getUserData = state => state.user.userData;
+export const getToken = state => state?.user?.userData.token
+export const getLogStatus = state => state?.user?.userData.loggedIn
 

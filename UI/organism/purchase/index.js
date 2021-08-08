@@ -1,36 +1,54 @@
-import Cards from '../../atoms/cards'
-import { useMutation, gql } from '@apollo/client'
-import { ADD_ORDER } from '../../../server/queries'
+import { useEffect } from 'react'
+import { gql, useMutation } from '@apollo/client'
+import { getShopkart, getUserData } from '../../store/selectors'
+import { clearKart } from '../../store/actions';
+import { useDispatch, useSelector } from 'react-redux'
+import { useCookies } from 'react-cookie';
 
-
-const Purchase = () =>{
-    const [ selectedProducts , setSelectedProducts  ] = useState( { price: 0, products: [] } );
-
-    const [ addOrder, { data }] = useMutation( ADD_ORDER );
-
-    const handleSelectProduct = () =>{
-
-        return setSelectedProducts()
+export const CREATE_TICKET = gql`
+mutation createTicket( $date:String, $author: String, $type: String, $data:[ProductInput]){
+  createTicket( date: $date, author:$author, type: $type, data: $data){
+    date
+    author
+    type
+    data{
+      id
+      price
     }
+  }
+}`
 
-    const onSubmitOrder = (e) => {
-        e.preventDefault();
-        addOrder({ variables: {
-                    price: selectedProducts.price,
-                    products: selectedProducts.products}});
-        setSelectedProducts({ price: 0, products: [] });
-    }
+export default function PurchaseOrder(){
+    const dispatch = useDispatch()
+    const shopkart = useSelector(state => getShopkart(state))
+    const userData = useSelector(state => getUserData(state))
+    const [ createTicket , { error, data }] = useMutation(CREATE_TICKET)
+    const [cookies, setCookie ] = useCookies(['id_token']);
 
-    const { FocusCard } = Cards();
-    const [addOrder] = useMutation(ADD_ORDER);  
+    useEffect(() => {
+        console.log(shopkart)
+        console.log(cookies.id_token)
+        console.log(userData.userId)
+    }, [shopkart])
+    
+    const handleTicketCreation = async() => {
+      await createTicket({
+        variables:{ 
+          id:"001",
+          date: "2020-05-16",
+          author: userData.userId,
+          type: "purchase",
+          data: shopkart.products,
+          }
+        })
+      dispatch(clearKart());
+      } 
 
-    return (<FocusCard>
-        
-
-        <button 
-        onClick={ e => onSubmitOrder(e) }>
-            LISTO
-        </button>
-
-    </FocusCard>)}
-export default Purchase;
+    
+    return(<div>
+            <button onClick={handleTicketCreation}>
+                    CONFIRMAR PEDIDO
+                </button>
+                {data && <div>CONFIRMASTE TU PEDIDO!{console.log(data)}</div>}
+        </div>)
+}
