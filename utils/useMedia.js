@@ -24,7 +24,6 @@ export default function useMedia() {
         window.onresize = () =>  {
             matchSize();
         }    
-        console.log(viewportSize)
         }, [viewportSize]);
 
     return viewportSize;
