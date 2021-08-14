@@ -17,5 +17,5 @@ export default function useNavabar(){
                 : isOpened;
     }
 
-    return {isOpened, handleOpenMenu, closeMenuResponsive};
+    return {isOpened, setIsOpened, handleOpenMenu, closeMenuResponsive};
 }

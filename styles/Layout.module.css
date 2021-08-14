@@ -1,12 +1,12 @@
 
 
 .layout_container {
-    position: relative; 
+/*     position: relative; 
     background-color: blue;
     width:100%;
     height: 500px;
 
-    display: grid;
+    display: grid; */
 }    
 /* 
 .layout_container > * {
