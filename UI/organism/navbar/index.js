@@ -1,7 +1,44 @@
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
 import NavElements from "../../molecules/navElements";
-import useNavabar from "../../../utils/useNavbar";
+
+const SideBar = ({ navbarOpen, navbarClose, setNavbarOpen, setNavbarClose }) => {
+  const ref = useRef(null);
+
+  useEffect(
+    (e) => {
+      if (navbarOpen) {
+        ref.current.animate(
+          [{ transform: "translateX(-100%)" }, { transform: "translateY(0%)" }],
+          { duration: 200, iterations: 1 }
+        );
+        setNavbarClose(false);
+      }
+    },
+    [navbarOpen]
+  );
+
+  useEffect(
+    (e) => {
+      if (navbarClose) {
+        ref.current.animate(
+          [{ transform: "translateY(0%)" }, { transform: "translateX(-100%)" }],
+          { duration: 200, iterations: 1 }
+        );
+        setNavbarOpen(false);
+      }
+    },
+    [navbarClose]
+  );
+
+  return (
+    <div
+      style={
+        navbarOpen ? styles.navbar_side_menu__open : styles.navbar_side_menu
+      }
+      ref={ref}
+    ></div>
+  );
+};
 
 const NavBar = ({ size }) => {
   console.log(size);
@@ -17,6 +54,7 @@ const NavBar = ({ size }) => {
   } = NavElements();
 
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const [navbarClose, setNavbarClose] = useState(false);
 
   return (
     <div style={styles.navbar_container}>
@@ -24,28 +62,26 @@ const NavBar = ({ size }) => {
         {/* hamburguesa */}
         <div
           style={navbarOpen ? styles.navbar_bars__selected : styles.navbar_bars}
-          onClick={() => {
+          onClick={(e) => {
             setNavbarOpen(!navbarOpen);
-          }}
-          onBlur={() => {
-            setNavbarOpen(false);
           }}
         />
       </div>
       {/* panel lateral */}
       {navbarOpen && (
-        <div style={styles.navbar_side_menu}>
-          <div
-            style={styles.navbar_back}
-            onClick={() => {
-              setNavbarOpen(!navbarOpen);
-            }}
-            onBlur={() => {
-              setNavbarOpen(false);
-            }}
-          />
-        </div>
+        <div
+          style={styles.navbar_back}
+          onClick={(e) => {
+            setNavbarClose(!navbarClose);
+          }}
+        />
       )}
+      <SideBar
+        navbarOpen={navbarOpen}
+        navbarClose={navbarClose}
+        setNavbarOpen={setNavbarOpen}
+        setNavbarClose={setNavbarClose}
+      />
     </div>
   );
 };
@@ -55,7 +91,6 @@ const styles = {
     backgroundColor: "grey",
     display: "flex",
     width: "100%",
-    /*     padding: "12px", */
     zIndex: "2",
   },
   navbar_bar_container: {
@@ -67,11 +102,13 @@ const styles = {
     backgroundColor: "white",
     height: "40px",
     width: "40px",
+    zIndex: "2",
   },
   navbar_back: {
     backgroundColor: "black",
     height: "40px",
     width: "40px",
+    zIndex: "3",
   },
   navbar_bars__selected: {
     backgroundColor: "white",
@@ -87,6 +124,21 @@ const styles = {
     width: "40%",
     maxWidth: "300px",
     zIndex: "2",
+    animationName: "sideBar",
+    WebkitTransform: "translateX(-100%)",
+    Animation: "slide-out 0.5s forwards",
+  },
+  navbar_side_menu__open: {
+    padding: "12px",
+    position: "absolute",
+    backgroundColor: "red",
+    height: "100%",
+    width: "40%",
+    maxWidth: "300px",
+    zIndex: "2",
+    animationName: "sideBar",
+    WebkitTransform: "translateX(0%)",
+    Animation: " slide-out 0.5s forwards",
   },
 };
 

@@ -1,8 +1,6 @@
 import React from 'react'
 import NavBar from '../navbar/index';
 import styles from '../../../styles/Layout.module.css'
-import PropTypes from 'prop-types';
-import Login from '../login/index';
 
 const layout = ({children, size}) => {
  
@@ -11,7 +9,7 @@ const layout = ({children, size}) => {
         <div className={styles.layout_container}>
             <NavBar className={styles.navbar} size={size} />
             {children}
-          {/*   <div className={styles.layout_menu}> EL MENU LOCO </div> */}
+          {/*<div className={styles.layout_menu}> EL MENU LOCO </div>*/}
         </div>
     )
 }
