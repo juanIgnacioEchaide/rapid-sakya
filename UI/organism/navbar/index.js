@@ -1,20 +1,26 @@
 import { useState, useEffect, useRef } from "react";
 import NavElements from "../../molecules/navElements";
+import { isMobileViewport, isDesktopViewport } from "../../../utils/constants";
 
 const SideBar = ({
   navbarOpen,
   navbarClose,
   setNavbarOpen,
   setNavbarClose,
+  size,
 }) => {
   const ref = useRef(null);
 
   useEffect(
     (e) => {
-      if (navbarOpen) {
+      if (navbarOpen && isMobileViewport(size)) {
         ref.current.animate(
-          [{ transform: "translateX(-100%)" }, { transform: "translateY(0%)" }],
-          { duration: 200, iterations: 1 }
+          [
+            { transform: "translateX(-100%)" },
+            /* { WebkitTransform: "slide-in 0.5s forwards" }, */
+            { transform: "translateY(0%)" },
+          ],
+          { duration: 200, iterations: 1, AnimationTimingFunction: "linear" }
         );
         setNavbarClose(false);
       }
@@ -24,10 +30,14 @@ const SideBar = ({
 
   useEffect(
     (e) => {
-      if (navbarClose) {
+      if ((navbarClose && isMobileViewport(size)) || isDesktopViewport(size)) {
         ref.current.animate(
-          [{ transform: "translateY(0%)" }, { transform: "translateX(-100%)" }],
-          { duration: 200, iterations: 1 }
+          [
+            { transform: "translateY(0%)" },
+            /* { WebkitTransform: "slide-out 0.5s forwards" }, */
+            { transform: "translateX(-100%)" },
+          ],
+          { duration: 250, iterations: 1, AnimationTimingFunction: "linear" }
         );
         setNavbarOpen(false);
       }
@@ -52,9 +62,7 @@ const SideBar = ({
   );
 };
 
-const NavBar = ({ size }) => {
-  console.log(size);
-
+const NavBar = (size) => {
   const {
     NavContainer,
     NavbarContainer,
@@ -72,22 +80,36 @@ const NavBar = ({ size }) => {
     <div style={styles.navbar_container}>
       <div style={styles.navbar_bar_container}>
         {/* hamburguesa */}
-        <div
-          style={navbarOpen ? styles.navbar_bars__selected : styles.navbar_bars}
-          onClick={(e) => {
-            setNavbarOpen(!navbarOpen);
-          }}
-        />
+        {isMobileViewport(size) && (
+          <div
+            style={styles.navbar_bars}
+            onClick={(e) => {
+              setNavbarOpen(!navbarOpen);
+            }}
+          />
+        )}
       </div>
-      {/* panel lateral */}
-      <SideBar
-        navbarOpen={navbarOpen}
-        navbarClose={navbarClose}
-        setNavbarOpen={setNavbarOpen}
-        setNavbarClose={setNavbarClose}
-      />
+      {isMobileViewport(size) && (
+        <SideBar
+          size={size}
+          navbarOpen={navbarOpen}
+          navbarClose={navbarClose}
+          setNavbarOpen={setNavbarOpen}
+          setNavbarClose={setNavbarClose}
+        />
+      )}
     </div>
   );
+};
+
+const sideMenuStyles = {
+  padding: "12px",
+  position: "absolute",
+  backgroundColor: "red",
+  height: "100%",
+  width: "40%",
+  maxWidth: "300px",
+  zIndex: "2",
 };
 
 const styles = {
@@ -114,35 +136,14 @@ const styles = {
     width: "40px",
     zIndex: "3",
   },
-  navbar_bars__selected: {
-    backgroundColor: "white",
-    height: "40px",
-    width: "40px",
-    border: "solid 1px red",
-  },
   navbar_side_menu: {
-    padding: "12px",
-    position: "absolute",
-    backgroundColor: "red",
-    height: "100%",
-    width: "40%",
-    maxWidth: "300px",
-    zIndex: "2",
-    animationName: "sideBar",
-    WebkitTransform: "translateX(-100%)",
-    Animation: "slide-out 0.5s forwards",
+    ...sideMenuStyles,
+    WebkitTransform: "translateX(-101%)",
   },
   navbar_side_menu__open: {
-    padding: "12px",
-    position: "absolute",
-    backgroundColor: "red",
-    height: "100%",
-    width: "40%",
-    maxWidth: "300px",
-    zIndex: "2",
-    animationName: "sideBar",
+    ...sideMenuStyles,
     WebkitTransform: "translateX(0%)",
-    Animation: " slide-out 0.5s forwards",
+    boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.4)"
   },
 };
 
