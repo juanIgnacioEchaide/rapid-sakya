@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import NavElements from "../../molecules/navElements";
 
-const SideBar = ({ navbarOpen, navbarClose, setNavbarOpen, setNavbarClose }) => {
+const SideBar = ({
+  navbarOpen,
+  navbarClose,
+  setNavbarOpen,
+  setNavbarClose,
+}) => {
   const ref = useRef(null);
 
   useEffect(
@@ -36,7 +41,14 @@ const SideBar = ({ navbarOpen, navbarClose, setNavbarOpen, setNavbarClose }) => 
         navbarOpen ? styles.navbar_side_menu__open : styles.navbar_side_menu
       }
       ref={ref}
-    ></div>
+    >
+      <div
+        style={styles.navbar_back}
+        onClick={(e) => {
+          setNavbarClose(!navbarClose);
+        }}
+      />
+    </div>
   );
 };
 
@@ -68,14 +80,6 @@ const NavBar = ({ size }) => {
         />
       </div>
       {/* panel lateral */}
-      {navbarOpen && (
-        <div
-          style={styles.navbar_back}
-          onClick={(e) => {
-            setNavbarClose(!navbarClose);
-          }}
-        />
-      )}
       <SideBar
         navbarOpen={navbarOpen}
         navbarClose={navbarClose}
