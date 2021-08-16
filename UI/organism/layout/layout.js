@@ -9,7 +9,6 @@ const layout = ({children, size}) => {
         <div className={styles.layout_container}>
             <NavBar className={styles.navbar} size={size} />
             {children}
-          {/*<div className={styles.layout_menu}> EL MENU LOCO </div>*/}
         </div>
     )
 }

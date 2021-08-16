@@ -15,11 +15,7 @@ const SideBar = ({
     (e) => {
       if (navbarOpen && isMobileViewport(size)) {
         ref.current.animate(
-          [
-            { transform: "translateX(-100%)" },
-            /* { WebkitTransform: "slide-in 0.5s forwards" }, */
-            { transform: "translateY(0%)" },
-          ],
+          [{ transform: "translateX(-100%)" }, { transform: "translateX(0%)" }],
           { duration: 200, iterations: 1, AnimationTimingFunction: "linear" }
         );
         setNavbarClose(false);
@@ -32,11 +28,7 @@ const SideBar = ({
     (e) => {
       if ((navbarClose && isMobileViewport(size)) || isDesktopViewport(size)) {
         ref.current.animate(
-          [
-            { transform: "translateY(0%)" },
-            /* { WebkitTransform: "slide-out 0.5s forwards" }, */
-            { transform: "translateX(-100%)" },
-          ],
+          [{ transform: "translatex(0%)" }, { transform: "translateX(-100%)" }],
           { duration: 250, iterations: 1, AnimationTimingFunction: "linear" }
         );
         setNavbarOpen(false);
@@ -62,6 +54,31 @@ const SideBar = ({
   );
 };
 
+const TopBar = ({ size, hoverOnMenu }) => {
+  const ref = useRef(null);
+
+  useEffect((e) => {
+    if (hoverOnMenu) {
+      ref.current.animate(
+        [{ transform: "translateY(-101%)" }, { transform: "translateY(0%)" }],
+        { duration: 250, iterations: 1, AnimationTimingFunction: "linear" }
+      );
+    }
+    if (!hoverOnMenu) {
+      ref.current.animate(
+        [{ transform: "translateY(0%)" }, { transform: "translateY(-101%)" }],
+        { duration: 250, iterations: 1, AnimationTimingFunction: "linear" }
+      );
+    }
+  }, []);
+
+  return (
+    <div ref={ref} style={styles.navbar_top_bar}>
+      hola
+    </div>
+  );
+};
+
 const NavBar = (size) => {
   const {
     NavContainer,
@@ -75,9 +92,25 @@ const NavBar = (size) => {
 
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [navbarClose, setNavbarClose] = useState(false);
+  const [hoverOnMenu, setHoverOnMenu] = useState(false);
+
+  const handleHoverIn = (e) => {
+    setHoverOnMenu(true);
+    console.log("hover in", hoverOnMenu);
+  };
+  const handleHoverOut = (e) => {
+    setHoverOnMenu(false);
+    console.log("hover out", hoverOnMenu);
+  };
 
   return (
-    <div style={styles.navbar_container}>
+    <div
+      style={styles.navbar_container}
+      onMouseEnter={() => handleHoverIn()}
+      onMouseLeave={() => handleHoverOut()}
+    >
+      {hoverOnMenu && isDesktopViewport(size) &&
+       <TopBar hoverOnMenu={hoverOnMenu} />}
       <div style={styles.navbar_bar_container}>
         {/* hamburguesa */}
         {isMobileViewport(size) && (
@@ -109,20 +142,19 @@ const sideMenuStyles = {
   height: "100%",
   width: "40%",
   maxWidth: "300px",
-  zIndex: "2",
+  zIndex: "3",
 };
-
 const styles = {
   navbar_container: {
     backgroundColor: "grey",
     display: "flex",
     width: "100%",
-    zIndex: "2",
   },
   navbar_bar_container: {
     height: "8vh",
     minHeight: "60px",
     padding: "12px",
+    /* zIndex: "4", */
   },
   navbar_bars: {
     backgroundColor: "white",
@@ -143,7 +175,14 @@ const styles = {
   navbar_side_menu__open: {
     ...sideMenuStyles,
     WebkitTransform: "translateX(0%)",
-    boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.4)"
+    boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.4)",
+  },
+  navbar_top_bar: {
+    height: "150px",
+    width: "100%",
+    backgroundColor: "green",
+    zIndex: "0",
+    position: "absolute"
   },
 };
 
