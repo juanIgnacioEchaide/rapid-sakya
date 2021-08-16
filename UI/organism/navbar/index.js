@@ -109,8 +109,6 @@ const NavBar = (size) => {
       onMouseEnter={() => handleHoverIn()}
       onMouseLeave={() => handleHoverOut()}
     >
-      {hoverOnMenu && isDesktopViewport(size) &&
-       <TopBar hoverOnMenu={hoverOnMenu} />}
       <div style={styles.navbar_bar_container}>
         {/* hamburguesa */}
         {isMobileViewport(size) && (
@@ -122,6 +120,9 @@ const NavBar = (size) => {
           />
         )}
       </div>
+      {hoverOnMenu && isDesktopViewport(size) && (
+        <TopBar hoverOnMenu={hoverOnMenu} />
+      )}
       {isMobileViewport(size) && (
         <SideBar
           size={size}
@@ -142,7 +143,7 @@ const sideMenuStyles = {
   height: "100%",
   width: "40%",
   maxWidth: "300px",
-  zIndex: "3",
+  zIndex: "4",
 };
 const styles = {
   navbar_container: {
@@ -151,22 +152,23 @@ const styles = {
     width: "100%",
   },
   navbar_bar_container: {
+    position:"relative",
     height: "8vh",
     minHeight: "60px",
     padding: "12px",
-    /* zIndex: "4", */
+    zIndex: "3",
   },
   navbar_bars: {
     backgroundColor: "white",
     height: "40px",
     width: "40px",
-    zIndex: "2",
+    zIndex: "3",
   },
   navbar_back: {
     backgroundColor: "black",
     height: "40px",
     width: "40px",
-    zIndex: "3",
+    zIndex: "4",
   },
   navbar_side_menu: {
     ...sideMenuStyles,
@@ -181,8 +183,8 @@ const styles = {
     height: "150px",
     width: "100%",
     backgroundColor: "green",
-    zIndex: "0",
-    position: "absolute"
+    zIndex: "-1",
+    position: "absolute",
   },
 };
 
