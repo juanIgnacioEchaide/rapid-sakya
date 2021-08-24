@@ -7,7 +7,7 @@ const layout = ({ children, size }) => {
   return (
     <div className={styles.layout_container}>
       <NavBar className={styles.navbar} size={size} />
-      <div style={{ position: "relative", zIndex: "-2" }}>{children}</div>
+      <div style={{ position: "relative"}}>{children}</div>
     </div>
   );
 };

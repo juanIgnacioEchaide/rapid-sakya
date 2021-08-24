@@ -72,10 +72,15 @@ const TopBar = ({ size, hoverOnMenu }) => {
     }
   }, []);
 
+  
   return (
     <div ref={ref} style={styles.navbar_top_bar}>
-      hola
-    </div>
+        <a style={styles.navbar_top_bar_link}>PROMOS</a>
+        <a style={styles.navbar_top_bar_link}>MENUES</a>
+        <a style={styles.navbar_top_bar_link}>PRODUCTOS</a>
+        {/* <a style={styles.navbar_top_bar_link}>VOS</a> */}
+        <div style={{position:"float-right", backgroundColor:"#e7e3e2ff", minWidth:"100px", height:"100px", borderRadius:"30%",marginRight:"40px"}}/>
+      </div>
   );
 };
 
@@ -139,7 +144,8 @@ const NavBar = (size) => {
 const sideMenuStyles = {
   padding: "12px",
   position: "absolute",
-  backgroundColor: "red",
+  /* backgroundColor: "#28773cff", */
+  background: "radial-gradient(#2c983dff, #2c8a3dff",
   height: "100%",
   width: "40%",
   maxWidth: "300px",
@@ -147,13 +153,13 @@ const sideMenuStyles = {
 };
 const styles = {
   navbar_container: {
-    backgroundColor: "grey",
+    backgroundColor: "#232331ff",
     display: "flex",
     width: "100%",
   },
   navbar_bar_container: {
     position:"relative",
-    height: "8vh",
+    height: "2vh",
     minHeight: "60px",
     padding: "12px",
     zIndex: "3",
@@ -180,12 +186,20 @@ const styles = {
     boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.4)",
   },
   navbar_top_bar: {
+    display: "flex",
     height: "150px",
     width: "100%",
-    backgroundColor: "green",
-    zIndex: "-1",
+    backgroundColor: "#ffffffff",
     position: "absolute",
+    alignItems: "center",
+    justifyContent: "space-between",
+    boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.1)",
   },
+  navbar_top_bar_link: {
+    paddingLeft: "5vw",
+    paddingRight: "5vw",
+    color: "#04873dff",
+  }
 };
 
 export default NavBar;
