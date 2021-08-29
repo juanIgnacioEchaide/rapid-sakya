@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import NavElements from "../../molecules/navElements";
 import { isMobileViewport, isDesktopViewport } from "../../../utils/constants";
+import Link from "next/link";
 
 const SideBar = ({
   navbarOpen,
@@ -54,8 +55,35 @@ const SideBar = ({
   );
 };
 
+const SlideSubItem = (display, title) => {
+  useEffect((e) => {
+    if (display) {
+      ref.current.animate(
+        [{ transform: "translateX(-101%)" }, { transform: "translateX(0%)" }],
+        { duration: 250, iterations: 1, AnimationTimingFunction: "linear" }
+      );
+    }
+    if (!display) {
+      ref.current.animate(
+        [{ transform: "translateX(0%)" }, { transform: "translateX(-101%)" }],
+        { duration: 250, iterations: 1, AnimationTimingFunction: "linear" }
+      );
+    }
+  }, []);
+
+  const ref = useRef(null);
+
+  return (
+    <div ref={ref}>
+      <div />
+      DESPLIEGA
+    </div>
+  );
+};
+/* ------------------------------------------------ */
 const TopBar = ({ size, hoverOnMenu }) => {
   const ref = useRef(null);
+  const [display, setDisplay] = useState(false);
 
   useEffect((e) => {
     if (hoverOnMenu) {
@@ -72,15 +100,50 @@ const TopBar = ({ size, hoverOnMenu }) => {
     }
   }, []);
 
-  
+  const links = [
+    { url: "/promos", title: "PROMOS" },
+    { url: "/menues", title: "MENUES" },
+    { url: "/productos", title: "PRODUCTOS" },
+  ];
+  const handleHoverLink = (e, action) => {
+    if (action === "ENTER") {
+      setDisplay(true);
+      console.log(ref.current);
+    }
+    if (action === "LEAVE") {
+      setDisplay(false);
+      console.log(ref.current);
+    }
+    console.log(display);
+  };
+
   return (
     <div ref={ref} style={styles.navbar_top_bar}>
-        <a style={styles.navbar_top_bar_link}>PROMOS</a>
-        <a style={styles.navbar_top_bar_link}>MENUES</a>
-        <a style={styles.navbar_top_bar_link}>PRODUCTOS</a>
-        {/* <a style={styles.navbar_top_bar_link}>VOS</a> */}
-        <div style={{position:"float-right", backgroundColor:"#e7e3e2ff", minWidth:"100px", height:"100px", borderRadius:"30%",marginRight:"40px"}}/>
-      </div>
+      {links.map((l) => (
+        <div
+          value="top_bar_link"
+          style={{ display: "flex", flexDirection: "row" }}
+          onMouseLeave={(e) => handleHoverLink(e, "LEAVE")}
+          onMouseEnter={(e) => handleHoverLink(e, "ENTER")}
+        >
+          <Link href={l.url}>
+            <a style={styles.navbar_top_bar_link}>{l.title}</a>
+          </Link>
+          {display && <SlideSubItem display={display} />}
+        </div>
+      ))}
+
+      <div
+        style={{
+          position: "float-right",
+          backgroundColor: "#e7e3e2ff",
+          minWidth: "100px",
+          height: "100px",
+          borderRadius: "30%",
+          marginRight: "40px",
+        }}
+      />
+    </div>
   );
 };
 
@@ -158,7 +221,7 @@ const styles = {
     width: "100%",
   },
   navbar_bar_container: {
-    position:"relative",
+    position: "relative",
     height: "2vh",
     minHeight: "60px",
     padding: "12px",
@@ -194,12 +257,13 @@ const styles = {
     alignItems: "center",
     justifyContent: "space-between",
     boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.1)",
+    zIndex: "4",
   },
   navbar_top_bar_link: {
     paddingLeft: "5vw",
     paddingRight: "5vw",
     color: "#04873dff",
-  }
+  },
 };
 
 export default NavBar;
