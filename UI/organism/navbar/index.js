@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import NavElements from "../../molecules/navElements";
 import { isMobileViewport, isDesktopViewport } from "../../../utils/constants";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 const SideBar = ({
@@ -55,13 +56,16 @@ const SideBar = ({
   );
 };
 
+/* --------------------------------------------------------------------- */
+
 const SlideSubItem = (display, title) => {
   useEffect((e) => {
     if (display) {
       ref.current.animate(
         [{ transform: "translateX(-101%)" }, { transform: "translateX(0%)" }],
-        { duration: 250, iterations: 1, AnimationTimingFunction: "linear" }
+        { duration: 280, iterations: 1, AnimationTimingFunction: "linear" }
       );
+      ref.current.styles = { opacity: "20%" };
     }
     if (!display) {
       ref.current.animate(
@@ -72,15 +76,89 @@ const SlideSubItem = (display, title) => {
   }, []);
 
   const ref = useRef(null);
+  const trends = [
+    { id: 0, item: "trend 1", url: "" },
+    { id: 1, item: "trend 1", url: "" },
+    { id: 2, item: "trend 1", url: "" },
+    { id: 3, item: "+", url: "" },
+  ];
+
+  const variants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
 
   return (
-    <div ref={ref}>
-      <div />
-      DESPLIEGA
+    <div
+      ref={ref}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column",
+        lineHeight: "35px",
+        overflow: "hidden",
+      }}
+    >
+      {trends.map((t) =>
+        t.id === 3 ? (
+          <Link href="/route/{id}">
+            <a>
+              <i
+                style={{
+                  opacity: "1",
+                  borderWidth: "0 3px 3px 0",
+                  display: "inline-block",
+                  padding: "3px",
+                  transform: "rotate(45deg)",
+                  webkitTransform: "rotate(45deg)",
+                }}
+              ></i>
+            </a>
+          </Link>
+        ) : (
+          <Link href="/route/{id}">
+            <motion.div initial="hidden" animate="visible" variants={variants}>
+              <a>{t.item}</a>
+            </motion.div>
+          </Link>
+        )
+      )}
     </div>
   );
 };
-/* ------------------------------------------------ */
+
+/* ------------------------------------------------------------------------------ */
+const TopBarLink = ({ title, url, index, id, display, setDisplay }) => {
+  const ref = useRef();
+
+  const handleHoverLink = (e, action) => {
+    if (action === "ENTER") {
+      setDisplay(true);
+      console.log(ref.current);
+    }
+    if (action === "LEAVE") {
+      setDisplay(false);
+      console.log(ref.current);
+    }
+    console.log(display);
+  };
+
+  return (
+    <div
+      value="top_bar_link"
+      style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+      onMouseLeave={(e) => handleHoverLink(e, "LEAVE")}
+      onMouseEnter={(e) => handleHoverLink(e, "ENTER")}
+    >
+      <Link href={url}>
+        <a style={styles.navbar_top_bar_link}>{title}</a>
+      </Link>
+      {display && <SlideSubItem display={display} />}
+    </div>
+  );
+};
+
+/* ---------------------------------------------------------------------- */
 const TopBar = ({ size, hoverOnMenu }) => {
   const ref = useRef(null);
   const [display, setDisplay] = useState(false);
@@ -101,36 +179,22 @@ const TopBar = ({ size, hoverOnMenu }) => {
   }, []);
 
   const links = [
-    { url: "/promos", title: "PROMOS" },
-    { url: "/menues", title: "MENUES" },
-    { url: "/productos", title: "PRODUCTOS" },
+    { id: 0, url: "/promos", title: "PROMOS" },
+    { id: 1, url: "/menues", title: "MENUES" },
+    { id: 3, url: "/productos", title: "PRODUCTOS" },
   ];
-  const handleHoverLink = (e, action) => {
-    if (action === "ENTER") {
-      setDisplay(true);
-      console.log(ref.current);
-    }
-    if (action === "LEAVE") {
-      setDisplay(false);
-      console.log(ref.current);
-    }
-    console.log(display);
-  };
 
   return (
     <div ref={ref} style={styles.navbar_top_bar}>
-      {links.map((l) => (
-        <div
-          value="top_bar_link"
-          style={{ display: "flex", flexDirection: "row" }}
-          onMouseLeave={(e) => handleHoverLink(e, "LEAVE")}
-          onMouseEnter={(e) => handleHoverLink(e, "ENTER")}
-        >
-          <Link href={l.url}>
-            <a style={styles.navbar_top_bar_link}>{l.title}</a>
-          </Link>
-          {display && <SlideSubItem display={display} />}
-        </div>
+      {links.map((l, index) => (
+        <TopBarLink
+          url={l.url}
+          title={l.title}
+          index={index}
+          id={l.id}
+          display={display}
+          setDisplay={setDisplay}
+        />
       ))}
 
       <div
@@ -147,6 +211,7 @@ const TopBar = ({ size, hoverOnMenu }) => {
   );
 };
 
+/* --------------------------------------------------------- */
 const NavBar = (size) => {
   const {
     NavContainer,
