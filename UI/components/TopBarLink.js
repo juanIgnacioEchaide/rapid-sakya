@@ -7,20 +7,22 @@ const TopBarLink = ({
   url,
   id,
   index,
-  display,
-  setDisplay,
   mouseOnLink,
   setMouseOnLink,
   subtitles,
 }) => {
   const ref = useRef();
 
+  const [display, setDisplay] = useState(false);
+
   const handleHoverLink = (e, action) => {
     if (action === "ENTER") {
       setMouseOnLink(e.target.id);
+      setDisplay(true);
     }
     if (action === "LEAVE") {
       setMouseOnLink(null);
+      setDisplay(false);
     }
   };
  
@@ -37,7 +39,7 @@ const TopBarLink = ({
         </a>
       </Link>
       {display && (
-        <SlideSubItem display={shouldDisplay()} index={index} subtitles={subtitles} />
+        <SlideSubItem display={display} index={index} subtitles={subtitles} />
       )}
     </div>
   );
