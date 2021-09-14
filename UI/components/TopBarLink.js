@@ -29,24 +29,33 @@ const TopBarLink = ({
   return (
     <div
       value="top_bar_link"
-      style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+      style={styles.top_bar_link_container}
       onMouseLeave={(e) => handleHoverLink(e, "LEAVE")}
       onMouseEnter={(e) => handleHoverLink(e, "ENTER")}
     >
       <Link href={url}>
-        <a id={id} style={styles.navbar_top_bar_link}>
+        <a id={id} style={styles.top_bar_link}>
           {title}
         </a>
       </Link>
       {display && (
-        <SlideSubItem display={display} index={index} subtitles={subtitles} />
+        <SlideSubItem 
+          display={display} 
+          index={index} 
+          subtitles={subtitles} 
+        />
       )}
     </div>
   );
 };
 
 const styles = {
-  navbar_top_bar_link: {
+  top_bar_link_container:{
+    display: "flex", 
+    flexDirection: "row", 
+    alignItems: "center", 
+  },
+  top_bar_link: {
     paddingLeft: "5vw",
     paddingRight: "5vw",
     color: "#04873dff",

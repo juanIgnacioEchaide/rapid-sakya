@@ -67,7 +67,6 @@ const SideBar = ({
   const sideMenuStyles = {
     padding: "12px",
     position: "absolute",
-    /* backgroundColor: "#28773cff", */
     background: "radial-gradient(#2c983dff, #2c8a3dff",
     height: "100%",
     width: "40%",
