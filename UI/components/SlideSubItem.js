@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-const SlideSubItem = (display, title) => {
+const SlideSubItem = (display, subtitles) => {
     useEffect((e) => {
       if (display) {
         ref.current.animate(
@@ -17,15 +17,10 @@ const SlideSubItem = (display, title) => {
           { duration: 250, iterations: 1, AnimationTimingFunction: "linear" }
         );
       }
+      console.log(subtitles);
     }, []);
   
     const ref = useRef(null);
-    const trends = [
-      { id: 0, item: "trend 1", url: "" },
-      { id: 1, item: "trend 1", url: "" },
-      { id: 2, item: "trend 1", url: "" },
-      { id: 3, item: "+", url: "" },
-    ];
   
     const variants = {
       hidden: { opacity: 0 },
@@ -46,30 +41,14 @@ const SlideSubItem = (display, title) => {
           overflow: "hidden",
         }}
       >
-        {trends.map((t) =>
-          t.id === 3 ? (
-            <Link href="/route/{id}">
-              <a>
-                <i
-                  style={{
-                    opacity: "1",
-                    borderWidth: "0 3px 3px 0",
-                    display: "inline-block",
-                    padding: "3px",
-                    transform: "rotate(45deg)",
-                    WebkitTransform: "rotate(45deg)",
-                  }}
-                ></i>
-              </a>
-            </Link>
-          ) : (
+    {subtitles && <div>llegan</div>
+  /*   subtitles.map((s) =>
             <motion.div>
-              <Link href="/route/{id}">
-                <a>{t.item}</a>
+              <Link >
+                <a>{s.name}</a>
               </Link>
             </motion.div>
-          )
-        )}
+      ) */}
       </motion.div>
     );
   };

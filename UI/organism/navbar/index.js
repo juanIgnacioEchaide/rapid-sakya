@@ -1,20 +1,10 @@
 import { useState } from "react";
-import NavElements from "../../molecules/navElements";
 import { isMobileViewport, isDesktopViewport } from "../../../utils/constants";
 import TopBar from "../../components/TopBar";
 import SideBar from "../../components/SideBar";
 
 /* --------------------------------------------------------- */
 const NavBar = (size) => {
-  const {
-    NavContainer,
-    NavbarContainer,
-    NavLinks,
-    NavLogo,
-    NavUser,
-    NavMenu,
-    NavBurger,
-  } = NavElements();
 
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [navbarClose, setNavbarClose] = useState(false);

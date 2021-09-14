@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import NavElements from "../../molecules/navElements";
-import { isMobileViewport, isDesktopViewport } from "../../../utils/constants";
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { isMobileViewport, isDesktopViewport } from "../../utils/constants";
 import Link from "next/link";
 
 const SideBar = ({
