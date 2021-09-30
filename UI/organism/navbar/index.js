@@ -3,7 +3,6 @@ import { isMobileViewport, isDesktopViewport } from "../../../utils/constants";
 import TopBar from "../../components/TopBar";
 import SideBar from "../../components/SideBar";
 
-/* --------------------------------------------------------- */
 const NavBar = (size) => {
 
   const [navbarOpen, setNavbarOpen] = useState(false);

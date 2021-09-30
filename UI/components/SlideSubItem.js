@@ -2,9 +2,10 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-const SlideSubItem = (display, subtitles) => {
+const SlideSubItem = ({display, subtitles}) => {
   
   useEffect((e) => {
+    console.log()
     if (display) {
       ref.current.animate(
         [{ transform: "translateX(-101%)" }, { transform: "translateX(0%)" }],
@@ -18,7 +19,6 @@ const SlideSubItem = (display, subtitles) => {
         { duration: 250, iterations: 1, AnimationTimingFunction: "linear" }
       );
     }
-    console.log(subtitles);
   }, []);
 
   const ref = useRef(null);
@@ -37,22 +37,13 @@ const SlideSubItem = (display, subtitles) => {
       style={styles.slide_container}
     >
       {
-        subtitles && (
-           <div style={styles.slide_links}>
-              <Link href="/"><a>llegan</a></ Link>
-              <Link href="/"><a>llegan</a></ Link>
-              <Link href="/"><a>llegan</a></ Link>
-              <Link href="/"><a>llegan</a></ Link>
-          </div>
-        )
-        /*   subtitles.map((s) =>
-            <motion.div>
-              <Link >
+        subtitles  && subtitles.map((s) =>
+            <motion.div styles={styles.slide_links}>
+              <Link href="laconchadetuma">
                 <a>{s.name}</a>
               </Link>
             </motion.div>
-      ) */
-      }
+      )}
     </motion.div>
   );
 };
@@ -67,7 +58,9 @@ const styles = {
   },
   slide_links:{
     display:"flex", 
-    flexDirection:"column"
+    flexDirection:"column", 
+    justifyContent: "flex-start",
+    alignItems: "flex-start"
   }
 };
 
