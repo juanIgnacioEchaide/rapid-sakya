@@ -7,7 +7,6 @@ const TopBarLink = ({
   url,
   id,
   index,
-  mouseOnLink,
   setMouseOnLink,
   subtitles,
 }) => {

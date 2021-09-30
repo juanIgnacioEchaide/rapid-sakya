@@ -49,18 +49,15 @@ const SlideSubItem = ({display, subtitles}) => {
 };
 
 const styles = {
-  slide_container: {
+  slide_container: {  
     display: "flex",
-    alignItems: "center",
+    alignItems: "left",
     flexDirection: "column",
     lineHeight: "35px",
     overflow: "hidden",
   },
   slide_links:{
     display:"flex", 
-    flexDirection:"column", 
-    justifyContent: "flex-start",
-    alignItems: "flex-start"
   }
 };
 
