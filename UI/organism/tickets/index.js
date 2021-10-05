@@ -1,10 +1,8 @@
 
 
-import { useEffect, useState } from 'react'
-import { gql, useQuery, useMutation } from '@apollo/client'
+import { useEffect } from 'react'
+import { gql, useQuery } from '@apollo/client'
 import { useDispatch, useSelector } from 'react-redux'
-import { getToken } from '../../store/selectors'
-import { setContext } from '@apollo/client/link/context';
 import { requestTicketsLoading, requestTicketsError, requestTicketsSuccess } from '../../store/actions'
 import { getTickets, getLogStatus } from '../../store/selectors'
 
@@ -23,7 +21,7 @@ export const GET_TICKETS = gql`
     }
   }`
 
-export default function Tickets() {
+export default function useTickets() {
   const loggedIn = useSelector(state => getLogStatus(state));
   const { data, loading, error } = useQuery(GET_TICKETS)
   const dispatch = useDispatch()
@@ -45,8 +43,5 @@ export default function Tickets() {
         }}
   }, [loading, error, data])
 
-  return (
-    <div>
-    </div>
-  )
+  return { tickets }
 }
