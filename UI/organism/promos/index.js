@@ -42,5 +42,5 @@ export default function usePromos() {
           }
     }, [loading, error, data])
   
-    return {promos}
+    return { promos }
   }

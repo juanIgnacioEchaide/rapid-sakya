@@ -1,16 +1,17 @@
 import { useEffect } from "react";
-import usePromos from "../UI/organism/promos";
+import useMenus from "../UI/organism/menus";
 
 export default function Dashboard() {
-  const promos = usePromos();
+  const menus = useMenus();
 
   useEffect(() => {
-    console.log(promos);
-  }, [promos]);
+    console.log(menus);
+  }, [menus]);
 
   return <div>{
-              promos && 
-              promos.promos.map((p) => 
-                                    <div>{p.name}</div>)}
+              menus && 
+              menus.menus.map((m) => 
+                                    <div>{m.name}</div>)
+              }
           </div>;
 }
