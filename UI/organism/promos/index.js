@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPromos } from '../../store/selectors'
-import { requestPromosLoading, requestPromosError, requestPromosSuccess } from '../../store/actions'
+import { getPromos } from '../../../store/selectors'
+import { requestPromosLoading, requestPromosError, requestPromosSuccess } from '../../../store/actions'
 
 export const GET_PROMOS = gql`
 query getPromos($id: ID){
@@ -24,7 +24,7 @@ query getPromos($id: ID){
     }
 }
 `
-export default function Promos() {
+export default function usePromos() {
 
     const { data, loading, error } = useQuery(GET_PROMOS)
     const dispatch = useDispatch()
@@ -38,22 +38,9 @@ export default function Promos() {
             return dispatch(requestPromosError(error))
           }
           if(data){
-            console.log(data)
             return dispatch(requestPromosSuccess(data.promo))
           }
     }, [loading, error, data])
   
-    return (
-      <div>
-        {console.log(promos)}
-             {promos && promos.map( promo => (
-              <div key={promo.date}>
-                  <h3>{promo.date}</h3>
-                  <p>
-                      {promo.price}
-                  </p>
-              </div>
-            ))} 
-      </div>
-    )
+    return {promos}
   }
