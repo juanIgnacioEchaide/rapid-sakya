@@ -1,8 +1,10 @@
 
-export const size = {
+export const viewport = {
     MOBILE_SIZE : 'MOBILE_SIZE',
     DESKTOP_SIZE : 'DESKTOP_SIZE'
 }
+export const isMobileViewport = size => (size.size === viewport.MOBILE_SIZE)
+export const isDesktopViewport = size => (size.size === viewport.DESKTOP_SIZE)
 
 export const INPUT_EMAIL = 'INPUT_EMAIL'
 export const INPUT_PASSWORD = 'INPUT_PASSWORD'

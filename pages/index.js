@@ -1,8 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import ClientOnly from '../UI/molecules/clientOnly';
-import dynamic from 'next/dynamic'
 import Login from '../UI/organism/login/index'
 
 export default function Home() {
@@ -17,10 +14,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <main className={styles.main}>
-        <ClientOnly> 
+     <main className={styles.main}>
             <Login/>
-        </ClientOnly>
       </main>
 
     </div>

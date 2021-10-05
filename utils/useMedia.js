@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
-import { size } from './constants';
+import { viewport } from './constants';
 
 export default function useMedia() {    
     
@@ -12,10 +12,10 @@ export default function useMedia() {
         let desktopSize= window.matchMedia("(min-width: 768px)");
 
         if(mobileSize.matches){
-            setViewportSize(size.MOBILE_SIZE);
+            setViewportSize(viewport.MOBILE_SIZE);
         }
         if(desktopSize.matches){
-            setViewportSize(size.DESKTOP_SIZE);
+            setViewportSize(viewport.DESKTOP_SIZE);
         }
     }
 
